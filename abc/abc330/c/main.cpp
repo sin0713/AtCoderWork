@@ -5,41 +5,26 @@
 #include <math.h>
 
 using namespace std;
+using ll = long long;
 
 // マクロ
 #define rep(i, n) for (int i = 0; i < (int)(n); i++)
 
 int main() {
-  int d;
+  ll d;
   cin >> d;
 
-  long long res = d;
-  int x = 1;
-  while(true) {
-    int first_num = abs(pow(x, 2) + pow(1, 2) - d); 
-    if (first_num > res) {
-      break;
+  ll ans = d;
+  ll y = 2e6;
+  for (ll x = 0; x <= 2e6; x++) {
+    while(y > 0 && x*x + y*y > d) {
+      y--;
     }
-    int y = 1;
-    while(true) {
-      int num = abs(pow(x, 2) + pow(y, 2) - d); 
-      if (num < res) {
-        res = num;
-      } else {
-        break;
-      }
-      y++;
-    }
-    x++;
+    ans = min(ans, abs(x*x + y*y - d));
+    ans = min(ans, abs(x*x + (y+1)*(y+1) - d));
   }
 
-
-
-
-
-
-
-
+  cout << ans << endl;
 
   return 0;
 }
