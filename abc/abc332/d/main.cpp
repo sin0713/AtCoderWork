@@ -1,10 +1,12 @@
 #include <vector>
+#include <bits/stdc++.h>
 #include <algorithm>
 #include <iostream>
 #include <atcoder/all>
 #include <math.h>
 
 using namespace std;
+using vvi = vector<vector<int>> ;
 
 // マクロ
 #define rep(i, n) for (int i = 0; i < (int)(n); i++)
@@ -27,39 +29,37 @@ int main() {
     }
   }
 
-  int cnt = 0;
-  rep(i, h) {
-    rep(j, w) {
-      if (a[i][j] == b[i][j]) continue;
+  queue<vvi> q;
+  map<vvi, int> dist;
+  auto push = [&] (vvi &state, int d) {
+    if (dist.count(state)) return;
 
-      bool is_found = false;
-      rep(k, h) {
-        rep(l, w) {
-          if (a[k][l] != b[i][j]) continue;
+    dist[state] = d;
+    q.push(state);
+  };
 
-          is_found = true;
+  push(a, 0);
+  while(!q.empty()) {
+    vvi state = q.front(); q.pop();
+    int current_dist = dist[state]; 
 
+    rep(i, h-1) {
+      vvi ns = state;
+      swap(ns[i], ns[i+1]);
+      push(ns, current_dist+1);
+    }
 
-        }
+    rep(j, w-1) {
+      vvi ns = state;
+      rep(i, h) {
+        swap(ns[i][j], ns[i][j+1]);
       }
-
-
-
-
-
-
-
-
+      push(ns, current_dist+1);
     }
   }
 
-
-
-
-
-
-
-
+  if (dist.count(b)) cout << dist[b] << endl;
+  else cout << -1 << endl;
 
   return 0;
 }
