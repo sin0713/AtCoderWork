@@ -24,10 +24,10 @@ int main() {
   }
 
   // 累積和管理配列作成
-  vector<vector<int>> s(n+1, vector<int>(n+1, 0));
+  vector<vector<long long>> s(n+1, vector<long long>(n+1, 0));
   rep(i, n) {
     rep(j, n) {
-      s[i+1][j+1] = s[i][j+1] + s[i+1][j] - s[i][j] + (a[i][j] == 'B');
+      s[i+1][j+1] = (ll)s[i][j+1] + (ll)s[i+1][j] - (ll)s[i][j] + (ll)(a[i][j] == 'B');
     }
   }
 
