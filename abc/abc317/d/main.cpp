@@ -24,7 +24,7 @@ int main() {
     cin >> x >> y >> z;
     int a = max(0, (y-x+1) / 2);
     w += z;
-    data.emplace_back(a, z*2);
+    data.emplace_back(a, 2*z);
   }
 
   const ll INF = 1e18;
@@ -35,7 +35,7 @@ int main() {
     auto [a, z] = data[i];
     rep(j, w + 1) {
       chmin(dp[i+1][j], dp[i][j]);
-      chmin(dp[i][min(w, j+w)], dp[i][j]+a);
+      chmin(dp[i+1][min(w, j+z)], dp[i][j]+a);
     }
   }
 
