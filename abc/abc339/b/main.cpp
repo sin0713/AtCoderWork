@@ -1,8 +1,4 @@
-#include <vector>
-#include <algorithm>
-#include <iostream>
 #include <atcoder/all>
-#include <math.h>
 #include <bits/stdc++.h>
 
 using namespace std;
