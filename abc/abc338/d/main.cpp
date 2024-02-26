@@ -21,7 +21,7 @@ int main() {
 
   vector<ll> d(n+1);
 
-  auto add = [&] (int l, int r, int value) {
+  auto add = [&] (ll l, ll r, int value) {
     d[l] += value;
     d[r] -= value;
   };
