@@ -16,22 +16,17 @@ int main() {
 
   auto measure = [] (char x, char y) {
     int res = abs(x - y);
-    if (res == 4 || res == 1) {
+    if (res == 1 || res == 4) {
       return 1;
-    } 
-
+    }
     return 2;
   };
 
-  if (measure(a, b) == measure(c,d)) {
+  if (measure(a, b) == measure(c, d)) {
     cout << "Yes" << endl;
   } else {
     cout << "No" << endl;
   }
-
-
-
-
 
   return 0;
 }
