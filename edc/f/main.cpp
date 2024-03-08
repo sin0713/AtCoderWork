@@ -28,11 +28,24 @@ int main() {
 
       chmax(dp[i][j], dp[i-1][j]);
       chmax(dp[i][j], dp[i][j-1]);
-      if (s[i] == t[j]) chmax(dp[i][j], dp[i-1][j-1]+1);
-
-      cout << dp[i][j] << " ";
+      if (s[i-1] == t[j-1]) chmax(dp[i][j], dp[i-1][j-1]+1);
     }
-    cout << endl;
   }
+
+  string sna = "";
+  while(n > 0 && m > 0) {
+    if (dp[n][m] == dp[n-1][m]) {
+      n--;
+    } else if (dp[n][m] == dp[n][m-1]) {
+      m--;
+    } else {
+      sna += s[n-1];
+      n--;
+      m--;
+    }
+  }
+  reverse(sna.begin(), sna.end());
+  cout << sna << endl;
+
   return 0;
 }
