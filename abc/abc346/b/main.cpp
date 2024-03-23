@@ -13,6 +13,19 @@ int main() {
   int w, b;
   cin >> w >> b;
 
-  int n = piano.size();
+  int n = w+b;
+  int m = piano.size();
+
+  rep(i, m) {
+    int cnt = 0;
+    for (int j = 0; j < n; j++) {
+      if (piano[(i+j) % m] == 'w') cnt++;
+    }
+    if (cnt == w) {
+      cout << "Yes" << endl;
+      return 0;
+    }
+  }
+  cout << "No" << endl;
   return 0;
 }
