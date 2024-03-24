@@ -17,7 +17,12 @@ int main() {
 
   int ans = 0;
   auto dfs = [&](auto dfs, int i, int j, unordered_map<int, int> mp) -> void {
-    cout << "i: " << i << " j: " << j << endl;
+    if (i < 0 || i >= h || j < 0 || j >= w) {
+      return;
+    }
+
+    mp[a[i][j]]++;
+
     if (i == h-1 && j == w-1) {
       bool ok = true;
       for (auto [k, v] : mp) {
@@ -29,11 +34,6 @@ int main() {
       return;
     }
 
-    if (i < 0 || i >= h || j < 0 || j >= w) {
-      return;
-    }
-
-    mp[a[i][j]]++;
     dfs(dfs, i+1, j, mp);
     dfs(dfs, i, j+1, mp);
   };
