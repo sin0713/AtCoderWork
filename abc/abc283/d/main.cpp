@@ -18,20 +18,13 @@ int main() {
   stack.push_back("");
   rep(i, n) {
     if (s[i] == '(') {
-      if (stack.size() == 1 && stack.back() == "") {
-        string& bk = stack.back();
-        bk.push_back(s[i]);
-      } else {
-        string str{s[i]}; 
-        stack.push_back(str);
-      }
+      stack.push_back("");
     } else if (s[i] == ')') {
       string bk = stack.back(); 
-      stack.pop_back();
-      int m = bk.size();
-      for (int j = m-1; j >= 1; j--) {
-        st.erase(bk[j]);
+      for (char c : bk) {
+        st.erase(c);
       }
+      stack.pop_back();
     } else {
       if (st.count(s[i])) {
         cout << "No" << endl;
