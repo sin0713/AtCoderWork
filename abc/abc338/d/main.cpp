@@ -1,8 +1,3 @@
-#include <vector>
-#include <algorithm>
-#include <iostream>
-#include <atcoder/all>
-#include <math.h>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -17,28 +12,33 @@ int main() {
   cin >> n >> m;
 
   vector<int> x(m);
-  rep(i, m) { cin >> x[i]; x[i]--;}
+  rep(i, m) cin >> x[i];
 
   vector<ll> d(n+1);
-
-  auto add = [&] (ll l, ll r, int value) {
+  auto add = [&](ll l, ll r, ll value) {
     d[l] += value;
     d[r] -= value;
   };
+
   rep(i, m-1) {
-    int s = x[i]; int t = x[i+1];
+    ll s = x[i]; 
+    ll t = x[i+1]; 
     if (s > t) swap(s, t);
-    int a = t - s;
-    int b = n - a;
+
+    ll a = t - s;
+    ll b = n - a;
 
     add(0, s, a);
     add(s, t, b);
     add(t, n, a);
   }
 
-  rep(i, n) d[i+1] += d[i]; 
+  // 差分の列から復元
+  rep(i, n) d[i+1] += d[i];
 
-  int ans = *min_element(d.begin(), d.begin()+n);
+  ll ans = 1e18;
+  rep(i, n) {
+    ans = min(ans, d[i]);
+  }
   cout << ans << endl;
-  return 0;
 }
