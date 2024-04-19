@@ -1,9 +1,4 @@
-#include <vector>
-#include <algorithm>
-#include <iostream>
-#include <atcoder/all>
-#include <math.h>
-#include <bitset>
+#include <bits/stdc++.h>
 
 using namespace std;
 using ll = long long; 
@@ -17,58 +12,29 @@ int main() {
   cin >> n >> q;
 
   vector<string> a(n);
-  rep(i, n) {
-    rep(j, n) {
-      cin >> a[i][j];
-    }
-  }
+  rep(i, n) cin >> a[i];
 
-  // 累積和管理配列作成
-  vector<vector<long long>> s(n+1, vector<long long>(n+1, 0));
-  rep(i, n) {
-    rep(j, n) {
-      s[i+1][j+1] = (ll)s[i][j+1] + (ll)s[i+1][j] - (ll)s[i][j] + (ll)(a[i][j] == 'B');
-    }
-  }
+  // 二次元累積和
+  vector<vector<int>> s(n+1, vector<int>(n+1));
+  rep(i, n) rep(j, n) s[i+1][j+1] = (a[i][j] == 'B');
+  rep(i, n) rep(j, n) s[i+1][j+1] += s[i+1][j];
+  rep(i, n) rep(j, n) s[i+1][j+1] += s[i][j+1];
 
-  // black 計測関数
-  auto get_black_num = [&] (int x, int y) {
-    long long res = 0;
-
-    ll x_size = x / n;
-    ll y_size = y / n;
-    ll remaining_x = x % n;
-    ll remaining_y = y % n;
-
-    long long all_num = s[n][n];
-    res += all_num * x_size * y_size;
-
-    long long bottom_num = s[remaining_y][n];
-    res += bottom_num * x_size;
-
-    long long right_side_num = s[n][remaining_x];
-    res += right_side_num * y_size;
-
-    long long remaining_num = s[remaining_y][remaining_x];
-    res += remaining_num;
-
-    return (ll)res;
+  auto f = [&] (int c, int d) {
+    ll res = s[c%n][d%n];
+    res += s[n][n]*ll(c/n)*(d/n);
+    res += s[n][d%n]*ll(c/n);
+    res += s[c%n][n]*ll(d/n);
+    return res;
   };
 
-  vector<ll> ans_list;
   rep(i, q) {
     int a, b, c, d;
     cin >> a >> b >> c >> d;
-    ++c;
-    ++d;
+    c++; d++;
 
-    long long ans = get_black_num(d, c) - get_black_num(d, a) - get_black_num(b, c) + get_black_num(b, a);
-    ans_list.push_back(ans);
+    ll ans = f(c, d) - f(a, d) - f(c, b) + f(a, b);
+    cout << ans << '\n';
   }
-
-  rep(i, (int)ans_list.size()) {
-    cout << ans_list[i] << endl;
-  }
-
   return 0;
 }
