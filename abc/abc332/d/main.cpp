@@ -29,37 +29,25 @@ int main() {
     }
   }
 
-  queue<vvi> q;
-  map<vvi, int> dist;
-  auto push = [&] (vvi &state, int d) {
-    if (dist.count(state)) return;
+  vector<int> order_h(h);
+  rep(i, h) order_h[i] = i;
+  vector<int> order_w(w);
+  rep(i, w) order_w[i] = i;
 
-    dist[state] = d;
-    q.push(state);
-  };
-
-  push(a, 0);
-  while(!q.empty()) {
-    vvi state = q.front(); q.pop();
-    int current_dist = dist[state]; 
-
-    rep(i, h-1) {
-      vvi ns = state;
-      swap(ns[i], ns[i+1]);
-      push(ns, current_dist+1);
-    }
-
-    rep(j, w-1) {
-      vvi ns = state;
+  do {
+      vector nv = a;
       rep(i, h) {
-        swap(ns[i][j], ns[i][j+1]);
+        rep(j, w) {
+          nv[i][j] = a[order_h[i]][j];
+        }
       }
-      push(ns, current_dist+1);
-    }
-  }
-
-  if (dist.count(b)) cout << dist[b] << endl;
-  else cout << -1 << endl;
-
+    do {
+      rep(j, w) {
+        rep(i, h) {
+          nv[i][j] = a[i][order_w[j]];
+        }
+      }
+    } while(next_permutation(order_w.begin(), order_w.end()))
+  } while(next_permutation(order_h.begin(), order_h.end()))
   return 0;
 }
